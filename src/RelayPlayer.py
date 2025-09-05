@@ -22,6 +22,8 @@ class RelayPlayer(Player):
 					"type": "turn_end",
 					"turn": battle.turn,
 					"state": battleData.battle_to_dict(battle),
+					"available_moves": [m.id for m in battle.available_moves],
+					"available_switches": [p.species for p in battle.available_switches],
 				}))
 				last_turn = battle.turn
 			await asyncio.sleep(0.1)

@@ -22,9 +22,10 @@ async def handler(ws):
 	
 	
 	if len(waiting_players) >= 2:
-		(p1,q1),(p2,q2) = waiting_players.pop(0),waiting_players.pop(0)
-		print(f"pairing players {p1} with {p2}")
-		asyncio.create_task(start_battle(p1,q1,p2,q2))
+		while len(waiting_players) >= 2:
+			(p1,q1),(p2,q2) = waiting_players.pop(0),waiting_players.pop(0)
+			print(f"pairing players {p1} with {p2}")
+			asyncio.create_task(start_battle(p1,q1,p2,q2))
 
 	try:
 		async for raw in ws:
