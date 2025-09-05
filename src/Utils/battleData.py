@@ -1,14 +1,17 @@
+from poke_env.battle import PokemonGender
 def battle_to_dict(battle):
 	def pokemon_view(poke):
 		if poke is None:
 			return None
+		
 		return {
 			"species": poke.species,
 			"current_hp": poke.current_hp,
 			"max_hp": poke.max_hp,
+			"level":poke.level,
+			"gender":PokemonGender(poke.gender).name.lower(),
 			"fainted": poke.fainted,
 			"status": str(poke.status) if poke.status else None,
-			"last_move_used": poke.last_request if poke.last_request else None,
 		}
 
 	return {

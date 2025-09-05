@@ -1,5 +1,6 @@
 from poke_env.player import Player
 from poke_env import AccountConfiguration
+from poke_env.battle import AbstractBattle
 from Utils import battleData
 import json
 import asyncio
@@ -41,7 +42,7 @@ class RelayPlayer(Player):
 				"available_switches": [p.species for p in battle.available_switches],
 			}
 		))
-
+		battle.battle_tag
 		action = await self.input_queue.get()
 		idx = action["index"]
 
@@ -59,7 +60,9 @@ class RelayPlayer(Player):
 				return self.choose_random_move(battle)
 		else:
 			return self.choose_random_move(battle)
-	
+
+
+
 	def _battle_finished_callback(self, battle):
 		asyncio.create_task(self.web_socket.send(json.dumps({
 			"type": "battle_end",
