@@ -1,15 +1,13 @@
 from poke_env.player import Player
-from poke_env import AccountConfiguration
+
 from poke_env.battle import AbstractBattle
 from Utils import battleData
 import json
 import asyncio
 
 class RelayPlayer(Player):
-	def __init__(self,username,web_socket,input_queue,**kwargs):
+	def __init__(self,web_socket,input_queue,**kwargs):
 		super().__init__(**kwargs)
-		if username != "":
-			self.account_configuration=AccountConfiguration(username,"")
 		self.input_queue = input_queue
 		self.web_socket = web_socket
 		self.last_turn = -1
