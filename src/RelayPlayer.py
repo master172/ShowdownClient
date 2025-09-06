@@ -6,12 +6,13 @@ import json
 import asyncio
 
 class RelayPlayer(Player):
-	def __init__(self,web_socket,input_queue,**kwargs):
+	def __init__(self,web_socket,input_queue,message_handler,**kwargs):
 		super().__init__(**kwargs)
 		self.input_queue = input_queue
 		self.web_socket = web_socket
 		self.last_turn = -1
 		self._watchers = {}
+		self.message_handler = message_handler
 
 	async def watch_turns(self,battle, web_socket):
 		last_turn = battle.turn
@@ -69,4 +70,15 @@ class RelayPlayer(Player):
 			"won": battle.won,
 			"state": battleData.battle_to_dict(battle),
 		})))
-	
+
+		if battle.won:
+			self.message_handler(
+				self.username,
+				{
+					"message":"battle_won",
+					"payload":{
+						"player":self,
+						"ws":self.web_socket
+					}
+				}
+			)

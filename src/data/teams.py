@@ -114,3 +114,14 @@ Jolly Nature
 - Rock Blast
 - Tail Slap
 """
+quick_team = """
+Pikachu @ Light Ball  
+Ability: Static  
+Tera Type: Electric  
+EVs: 252 Atk / 4 SpD / 252 Spe  
+Jolly Nature  
+- Volt Tackle  
+- Knock Off  
+- Thunder Bolt
+- Iron Tail  
+"""
