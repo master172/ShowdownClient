@@ -87,3 +87,14 @@ class RelayPlayer(Player):
 				}
 			}
 		)
+
+	def battle_position_commuincator(self,pos:int):
+		asyncio.create_task(self.web_socket.send(json.dumps({
+			"type": "battle_position",
+			"pos":pos
+		})))
+	
+	def tournament_champion_communicator(self):
+		asyncio.create_task(self.web_socket.send(json.dumps({
+			"type": "tournament_won",
+		})))

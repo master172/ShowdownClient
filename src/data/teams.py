@@ -150,5 +150,39 @@ Jolly Nature
 - Swords Dance  
 - Stealth Rock
 """
+quick_team_4="""
+Dragonite @ Lum Berry
+Ability: Multiscale
+EVs: 252 Atk / 4 Def / 252 Spe
+Jolly Nature
+- Dragon Dance
+- Dragon Claw
+- Extreme Speed
+- Earthquake
+"""
 
-quick_teams = [quick_team_1,quick_team_2,quick_team_3]
+quick_team_5 = """
+Snorlax @ Leftovers  
+Ability: Immunity  
+Tera Type: Normal  
+EVs: 252 HP / 4 Atk / 252 SpD  
+Sassy Nature  
+- Earthquake  
+- Shadow Ball  
+- Rest  
+- Sleep Talk  
+"""
+
+quick_team_6 ="""
+Tyranitar @ Expert Belt  
+Ability: Sand Stream  
+Tera Type: Rock  
+EVs: 252 HP / 4 Atk / 252 SpD  
+Sassy Nature  
+- Stealth Rock  
+- Dragon Pulse  
+- Iron Defense  
+- Outrage  
+"""
+
+quick_teams = [quick_team_1,quick_team_2,quick_team_3,quick_team_4,quick_team_5,quick_team_6]

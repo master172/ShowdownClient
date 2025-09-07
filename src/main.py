@@ -57,12 +57,20 @@ def handle_relay_message(player_id,payload):
 	if	payload["message"] == "battle_lost":
 		lost_players.append((player,ws))
 		won_player_count += 1
-		print(f"loser position is: {str(check_loser_position())}")
+		loser_position = check_loser_position()
+		print(f"loser position is: {str(loser_position)}")
+		player.battle_position_commuincator(loser_position)
+
 	elif payload["message"] == "battle_won":
-		waiting_players.append((player,ws))
 		lost_player_count += 1
-		print("the winner position is at:",str(check_winner_position()))
-		pair_event.set()
+		winner_position = check_winner_position()
+		print("the winner position is at:",str(winner_position))
+		if winner_position >= 2:
+			waiting_players.append((player,ws))
+			pair_event.set()
+		elif winner_position == 1:
+			print("we have a winner")
+			player.tournament_champion_communicator()
 
 def check_round_type():
 	global total_players_at_start,lost_players
