@@ -7,11 +7,12 @@ from poke_env import AccountConfiguration
 import data.teams as teams
 
 waiting_players = []
+lost_players = []
+lost_player_count:int = 0
 joined_player:int = 0
 format = "gen9ou"
 tournament_running:bool = False
 total_players_at_start:int = 0
-running_players:int = 0
 
 pair_event = asyncio.Event()
 shutdown_event = asyncio.Event()
@@ -46,11 +47,29 @@ async def handler(ws):
 		print("Client disconnected")
 
 def handle_relay_message(player_id,payload):
-	print(f"[Relay->Handler] {player_id}: {payload}")
+	global lost_player_count
+	#print(f"[Relay->Handler] {player_id}: {payload}")
 
-	if payload["message"] == "battle_won":
+	if	payload["message"] == "battle_lost":
+		lost_players.append((payload["payload"]["player"],payload["payload"]["ws"]))
+		print(f"loser position is: {str(check_loser_position())}")
+	elif payload["message"] == "battle_won":
 		waiting_players.append((payload["payload"]["player"],payload["payload"]["ws"]))
+		lost_player_count += 1
+		print("the winner position is at:",str(check_winner_position()))
 		pair_event.set()
+
+def check_loser_position():
+	global total_players_at_start
+	global lost_player_count
+	loser_position:int = total_players_at_start - lost_player_count
+	return loser_position
+	
+def check_winner_position():
+	global lost_player_count
+	global total_players_at_start
+	winner_position:int = total_players_at_start - lost_player_count
+	return winner_position
 
 async def pair_players():
 	global tournament_running
@@ -85,20 +104,28 @@ async def pair_players():
 
 async def admin_cli():
 	global tournament_running
+	global total_players_at_start
 	loop = asyncio.get_event_loop()
 	while not shutdown_event.is_set():
 		cmd = await loop.run_in_executor(None,input,"> ")
+
 		if cmd == "players":
 			print(f"waiting players: {len(waiting_players)}")
+
 		elif cmd == "player_names":
 			print("waiting player names:", {p[0].username for p in waiting_players})
+
+		elif cmd == "player_count":
+			print(f"tournament started with: {total_players_at_start}") if tournament_running else print("tournament not started yet")
 		elif cmd == "start":
 			if not tournament_running:
 				tournament_running = True
 				pair_event.set()
+				total_players_at_start = len(waiting_players)
 				print("Tournament starts")
 			else:
 				print("Tournament already running")
+
 		elif cmd == "stop":
 			if tournament_running:
 				tournament_running = False

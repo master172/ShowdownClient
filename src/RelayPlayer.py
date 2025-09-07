@@ -77,14 +77,13 @@ class RelayPlayer(Player):
 			"state": battleData.battle_to_dict(battle),
 		})))
 
-		if battle.won:
-			self.message_handler(
-				self.username,
-				{
-					"message":"battle_won",
-					"payload":{
-						"player":self,
-						"ws":self.web_socket
-					}
+		self.message_handler(
+			self.username,
+			{
+				"message":"battle_won" if battle.won else "battle_lost",
+				"payload":{
+					"player":self,
+					"ws":self.web_socket
 				}
-			)
+			}
+		)
