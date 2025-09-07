@@ -5,6 +5,7 @@ from poke_env import RandomPlayer
 import RelayPlayer
 from poke_env import AccountConfiguration
 import data.teams as teams
+from Utils import logger
 
 waiting_players = []
 lost_players = []
@@ -23,6 +24,7 @@ async def handler(ws):
 	global joined_player
 	joined_player += 1
 	print("Client connected!")
+	logger.log("client connected")
 
 	queue = asyncio.Queue()
 	client_player = RelayPlayer.RelayPlayer(
@@ -45,7 +47,7 @@ async def handler(ws):
 				await queue.put(data)
 
 	except websockets.exceptions.ConnectionClosed:
-		
+		logger.log("client disconnected")
 		print("Client disconnected")
 
 def handle_relay_message(player_id,payload):
@@ -59,29 +61,32 @@ def handle_relay_message(player_id,payload):
 		won_player_count += 1
 		loser_position = check_loser_position()
 		print(f"loser position is: {str(loser_position)}")
+		logger.log(f"player {player.username} lost, finishing position {loser_position}")
 		player.battle_position_commuincator(loser_position)
 
 	elif payload["message"] == "battle_won":
 		lost_player_count += 1
 		winner_position = check_winner_position()
 		print("the winner position is at:",str(winner_position))
+		logger.log(f"payer {player.username} won, player survival position {winner_position}")
 		if winner_position >= 2:
 			waiting_players.append((player,ws))
 			pair_event.set()
 		elif winner_position == 1:
 			print("we have a winner")
+			logger.log(f"player {player.username} won the tournament")
 			player.tournament_champion_communicator()
 
 def check_round_type():
 	global total_players_at_start,lost_players
 	round_num = total_players_at_start - len(lost_players)
 	if  round_num == 2:
-		print("Finals starting")
+		return "Finals starting"
 	elif round_num <= 4:
-		print("Semi finals starting")
+		return "Semi finals starting"
 	elif round_num <= 8:
-		print("quarter finals starting")
-	
+		return "quarter finals starting"
+	return None
 
 def check_loser_position():
 	global total_players_at_start
@@ -118,10 +123,9 @@ async def pair_players():
 		pair_event.clear()
 
 		while tournament_running and len(waiting_players) >= 2:
-			print("two players availaible")
-			print(p[0].username for p in waiting_players)
 			(p1,q1),(p2,q2) = waiting_players.pop(0),waiting_players.pop(0)
 			print(f"pairing players {p1.username} with {p2.username}")
+			logger.log(f"pairing players {p1.username} with {p2.username}")
 			asyncio.create_task(start_battle(p1,q1,p2,q2))
 		
 
@@ -146,6 +150,8 @@ async def admin_cli():
 			print(f"tournament started with: {total_players_at_start}") if tournament_running else print("tournament not started yet")
 		elif cmd == "start":
 			if not tournament_running:
+				logger.log(f"Tournment starts with {len(waiting_players)} players")
+				logger.log("players participating are " + ", ".join(p[0].username for p in waiting_players))
 				tournament_running = True
 				pair_event.set()
 				total_players_at_start = len(waiting_players)
@@ -156,24 +162,29 @@ async def admin_cli():
 		elif cmd == "stop":
 			if tournament_running:
 				tournament_running = False
-				
+				logger.log("tournament stopped")
 				print("Tournament stopped")
 			else:
 				print("Tournament already stopped")
 		elif cmd == "quit":
+			logger.log("attempting to shutdown")
 			shutdown_event.set()
 			print("shutting down server")
 			break
 		else:
+			logger.log(f"unknown command entered: {cmd}")
 			print("command unknown")
 
 async def start_battle(p1, q1, p2, q2):
-	check_round_type()
+	round_type = check_round_type()
+	logger.log(round_type) if round_type != None else logger.log("regular round is about to be started")
 	p1.battle_start_callback()
 	p2.battle_start_callback()
+	logger.log(f"starting battle of two players {p1.username} and {p2.username}")
 	await p1.battle_against(p2, n_battles=1)
 
 async def main():
+	
 	server = await websockets.serve(handler, "localhost", 8765)
 	#cli = await admin_cli()
 	#pairing_loop = await pair_players()
@@ -184,4 +195,5 @@ async def main():
 	await server.wait_closed()
 	print("Server closed.")
 
+logger.create_log_file()
 asyncio.run(main())
