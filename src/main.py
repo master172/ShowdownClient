@@ -14,6 +14,7 @@ total_players_at_start:int = 0
 running_players:int = 0
 
 pair_event = asyncio.Event()
+shutdown_event = asyncio.Event()
 
 async def handler(ws):
 	global joined_player
@@ -53,22 +54,39 @@ def handle_relay_message(player_id,payload):
 
 async def pair_players():
 	global tournament_running
-	while True:
-		await pair_event.wait()
+
+	while not shutdown_event.is_set():
+
+		pair_task = asyncio.create_task(pair_event.wait())
+		shutdown_task = asyncio.create_task(shutdown_event.wait())
+
+
+		done, pending = await asyncio.wait(
+			[pair_task,shutdown_task],
+			return_when=asyncio.FIRST_COMPLETED
+		)
+
+		for task in pending:
+			task.cancel()
+
+		if shutdown_event.is_set():
+			break
+
 		pair_event.clear()
 
 		while tournament_running and len(waiting_players) >= 2:
 			print("two players availaible")
-			print(p for p in waiting_players)
+			print(p[0].username for p in waiting_players)
 			(p1,q1),(p2,q2) = waiting_players.pop(0),waiting_players.pop(0)
 			print(f"pairing players {p1.username} with {p2.username}")
 			asyncio.create_task(start_battle(p1,q1,p2,q2))
+		
 
 
 async def admin_cli():
 	global tournament_running
 	loop = asyncio.get_event_loop()
-	while True:
+	while not shutdown_event.is_set():
 		cmd = await loop.run_in_executor(None,input,"> ")
 		if cmd == "players":
 			print(f"waiting players: {len(waiting_players)}")
@@ -89,10 +107,9 @@ async def admin_cli():
 			else:
 				print("Tournament already stopped")
 		elif cmd == "quit":
-			for task in asyncio.all_tasks():
-				task.cancel()
+			shutdown_event.set()
 			print("shutting down server")
-			exit(0)
+			break
 		else:
 			print("command unknown")
 
@@ -105,7 +122,11 @@ async def main():
 	server = await websockets.serve(handler, "localhost", 8765)
 	#cli = await admin_cli()
 	#pairing_loop = await pair_players()
-	await asyncio.gather(admin_cli(),pair_players())
+	await asyncio.gather(admin_cli(),pair_players(),shutdown_event.wait())
 
+	print("Closing server…")
+	server.close()
+	await server.wait_closed()
+	print("Server closed.")
 
 asyncio.run(main())
