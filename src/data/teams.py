@@ -185,4 +185,82 @@ Sassy Nature
 - Outrage  
 """
 
+team_a = """
+Clefairy-F @ Eviolite
+Ability: Magic Guard
+EVs: 252 HP / 252 Def / 4 SpD
+Bold Nature
+- Moonblast
+- Stealth Rock
+- Wish
+- Protect
+
+Gardevoir-Mega @ Gardevoirite
+Ability: Pixilate
+EVs: 252 SpA / 4 SpD / 252 Spe
+Timid Nature
+- Hyper Voice
+- Psyshock
+- Focus Blast
+- Taunt
+
+Meowstic-F @ Light Clay
+Ability: Prankster
+EVs: 252 HP / 4 SpD / 252 Spe
+Jolly Nature
+- Reflect
+- Light Screen
+- Thunder Wave
+- Psychic
+
+Sawsbuck-Autumn @ Leftovers
+Ability: Serene Grace
+EVs: 252 HP / 252 Atk / 4 SpD
+Adamant Nature
+- Horn Leech
+- Return
+- Bulk Up
+- Swords Dance
+"""
+
+team_b = """
+Nidoran-F @ Eviolite
+Ability: Hustle
+EVs: 252 Atk / 4 SpD / 252 Spe
+Jolly Nature
+- Poison Jab
+- Sucker Punch
+- Toxic Spikes
+- Substitute
+
+Meloetta-Pirouette @ Life Orb
+Ability: Serene Grace
+EVs: 252 Atk / 4 SpD / 252 Spe
+Jolly Nature
+- Close Combat
+- Knock Off
+- Return
+- Quick Attack
+
+Zygarde-10% @ Choice Band
+Ability: Power Construct
+EVs: 252 Atk / 4 SpD / 252 Spe
+Jolly Nature
+- Thousand Arrows
+- Extreme Speed
+- Outrage
+- Toxic
+
+Sawsbuck-Spring @ Sitrus Berry
+Ability: Chlorophyll
+EVs: 252 HP / 252 Def / 4 SpD
+Careful Nature
+- Horn Leech
+- Synthesis
+- Megahorn
+- Protect
+"""
+
+teams = [team_a,team_b]
+
 quick_teams = [quick_team_1,quick_team_2,quick_team_3,quick_team_4,quick_team_5,quick_team_6]
