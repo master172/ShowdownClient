@@ -12,6 +12,8 @@ def battle_to_dict(battle):
 			"gender":PokemonGender(poke.gender).name.lower(),
 			"fainted": poke.fainted,
 			"status": str(poke.status) if poke.status else None,
+			"boosts": poke.boosts if poke.boosts else None,
+			"effects": {eff.name : i for eff , i in poke.effects.items()} if poke.effects else None,
 		}
 
 	return {

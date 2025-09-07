@@ -13,7 +13,7 @@ lost_players = []
 won_player_count:int = 0
 lost_player_count:int = 0
 joined_player:int = 0
-format = "gen9customgame"
+format = "gen9randombattle"
 random_format:bool = False
 tournament_running:bool = False
 total_players_at_start:int = 0
@@ -57,7 +57,7 @@ async def handler(ws):
 						web_socket = ws,
 						input_queue=queue,
 						battle_format=format,
-						team=teams.teams[joined_player-1], #if random_format == False else None,
+						#team=teams.teams[joined_player-1], #if random_format == False else None,
 						message_handler=handle_relay_message)
 					
 					waiting_players.append((client_player,queue))
@@ -70,6 +70,7 @@ async def handler(ws):
 
 			elif data["type"] == "move" or data["type"] == "switch":
 				#print("vaild input received")
+				joined_player -= 1
 				await queue.put(data)
 
 

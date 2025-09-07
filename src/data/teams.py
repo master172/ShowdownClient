@@ -186,79 +186,127 @@ Sassy Nature
 """
 
 team_a = """
-Clefairy-F @ Eviolite
-Ability: Magic Guard
-EVs: 252 HP / 252 Def / 4 SpD
-Bold Nature
-- Moonblast
-- Stealth Rock
-- Wish
-- Protect
+Iron Valiant @ Booster Energy  
+Ability: Quark Drive  
+Tera Type: Fighting  
+EVs: 252 Atk / 4 SpA / 252 Spe  
+Jolly Nature  
+- Close Combat  
+- Moonblast  
+- Knock Off  
+- Swords Dance  
 
-Gardevoir-Mega @ Gardevoirite
-Ability: Pixilate
-EVs: 252 SpA / 4 SpD / 252 Spe
-Timid Nature
-- Hyper Voice
-- Psyshock
-- Focus Blast
-- Taunt
+Giratina-Origin @ Griseous Orb  
+Ability: Levitate  
+Tera Type: Ghost  
+EVs: 252 Atk / 4 Def / 252 Spe  
+Jolly Nature  
+- Dragon Dance  
+- Shadow Force  
+- Dragon Tail  
+- Defog  
 
-Meowstic-F @ Light Clay
-Ability: Prankster
-EVs: 252 HP / 4 SpD / 252 Spe
-Jolly Nature
-- Reflect
-- Light Screen
-- Thunder Wave
-- Psychic
+Glimmora @ Focus Sash  
+Ability: Poison Point  
+Tera Type: Poison  
+EVs: 252 HP / 252 SpA / 4 SpD  
+Modest Nature  
+- Earth Power  
+- Sludge Bomb  
+- Spikes  
+- Stealth Rock  
 
-Sawsbuck-Autumn @ Leftovers
-Ability: Serene Grace
-EVs: 252 HP / 252 Atk / 4 SpD
-Adamant Nature
-- Horn Leech
-- Return
-- Bulk Up
-- Swords Dance
+Iron Treads @ Leftovers  
+Ability: Quark Drive  
+Tera Type: Ground  
+EVs: 252 HP / 176 Def / 80 Spe  
+Impish Nature  
+- Earthquake  
+- Volt Switch  
+- Rapid Spin  
+- Body Press  
+
+Miraidon @ Choice Specs  
+Ability: Hadron Engine  
+Tera Type: Electric  
+EVs: 252 SpA / 4 SpD / 252 Spe  
+Timid Nature  
+- Draco Meteor  
+- Electro Drift  
+- U-turn  
+- Overheat  
+
+Kyurem @ Choice Scarf  
+Ability: Pressure  
+Tera Type: Dragon  
+EVs: 252 Atk / 4 SpD / 252 Spe  
+Jolly Nature  
+- Dragon Dance  
+- Icicle Crash  
+- Fusion Bolt  
+- Earth Power  
 """
 
 team_b = """
-Nidoran-F @ Eviolite
-Ability: Hustle
-EVs: 252 Atk / 4 SpD / 252 Spe
-Jolly Nature
-- Poison Jab
-- Sucker Punch
-- Toxic Spikes
-- Substitute
+Indeedee-F @ Psychic Seed  
+Ability: Psychic Surge  
+Tera Type: Fairy  
+EVs: 252 HP / 252 Def / 4 SpD  
+Bold Nature  
+- Psychic Terrain  
+- Follow Me  
+- Helping Hand  
+- Protect  
 
-Meloetta-Pirouette @ Life Orb
-Ability: Serene Grace
-EVs: 252 Atk / 4 SpD / 252 Spe
-Jolly Nature
-- Close Combat
-- Knock Off
-- Return
-- Quick Attack
+Ogerpon-Wellspring @ Wellspring Mask  
+Ability: Water Absorb  
+Tera Type: Water  
+EVs: 252 Atk / 4 SpA / 252 Spe  
+Jolly Nature  
+- Ivy Cudgel  
+- Play Rough  
+- U-turn  
+- Swords Dance  
 
-Zygarde-10% @ Choice Band
-Ability: Power Construct
-EVs: 252 Atk / 4 SpD / 252 Spe
-Jolly Nature
-- Thousand Arrows
-- Extreme Speed
-- Outrage
-- Toxic
+Kingambit @ Black Glasses  
+Ability: Supreme Overlord  
+Tera Type: Dark  
+EVs: 252 HP / 252 Atk / 4 SpD  
+Adamant Nature  
+- Kowtow Cleave  
+- Iron Head  
+- Sucker Punch  
+- Swords Dance  
 
-Sawsbuck-Spring @ Sitrus Berry
-Ability: Chlorophyll
-EVs: 252 HP / 252 Def / 4 SpD
-Careful Nature
-- Horn Leech
-- Synthesis
-- Megahorn
-- Protect
+Baxcalibur @ Loaded Dice  
+Ability: Thermal Exchange  
+Tera Type: Dragon  
+EVs: 252 Atk / 4 Def / 252 Spe  
+Jolly Nature  
+- Glaive Rush  
+- Icicle Crash  
+- Earthquake  
+- Dragon Dance  
+
+Chi-Yu @ Heavy-Duty Boots  
+Ability: Beads of Ruin  
+Tera Type: Fire  
+EVs: 252 SpA / 4 SpD / 252 Spe  
+Timid Nature  
+- Overheat  
+- Dark Pulse  
+- Fire Blast  
+- Tera Blast  
+
+Zamazenta-Crowned @ Rusted Shield  
+Ability: Dauntless Shield  
+Tera Type: Steel  
+EVs: 252 HP / 252 Def / 4 SpD  
+Impish Nature  
+- Body Press  
+- Iron Defense  
+- Close Combat  
+- Tera Blast
 """
 
 teams = [team_a,team_b]

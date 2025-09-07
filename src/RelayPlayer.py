@@ -24,6 +24,11 @@ class RelayPlayer(Player):
 					"state": battleData.battle_to_dict(battle),
 					"available_moves": [m.id for m in battle.available_moves],
 					"available_switches": [p.species for p in battle.available_switches],
+					"side_conditions": {
+						"active":battle.side_conditions,
+						"opponent":battle.opponent_side_conditions
+					},
+					"weather":battle.weather
 				}))
 				last_turn = battle.turn
 			await asyncio.sleep(0.1)
@@ -40,6 +45,11 @@ class RelayPlayer(Player):
 				"state": battleData.battle_to_dict(battle),
 				"available_moves": [m.id for m in battle.available_moves],
 				"available_switches": [p.species for p in battle.available_switches],
+				"side_conditions": {
+						"active":battle.side_conditions,
+						"opponent":battle.opponent_side_conditions
+					},
+				"weather":battle.weather
 			}
 		))
 		battle.battle_tag
@@ -74,6 +84,11 @@ class RelayPlayer(Player):
 			"type": "battle_end",
 			"won": battle.won,
 			"state": battleData.battle_to_dict(battle),
+			"side_conditions": {
+						"active":battle.side_conditions,
+						"opponent":battle.opponent_side_conditions
+					},
+			"weather":battle.weather
 		})))
 
 		self.message_handler(
