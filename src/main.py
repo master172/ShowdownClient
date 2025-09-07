@@ -8,6 +8,8 @@ import data.teams as teams
 
 waiting_players = []
 lost_players = []
+
+won_player_count:int = 0
 lost_player_count:int = 0
 joined_player:int = 0
 format = "gen9ou"
@@ -47,22 +49,36 @@ async def handler(ws):
 		print("Client disconnected")
 
 def handle_relay_message(player_id,payload):
-	global lost_player_count
+	global lost_player_count, won_player_count
 	#print(f"[Relay->Handler] {player_id}: {payload}")
 
+	player, ws = payload["payload"]["player"], payload["payload"]["ws"]
+
 	if	payload["message"] == "battle_lost":
-		lost_players.append((payload["payload"]["player"],payload["payload"]["ws"]))
+		lost_players.append((player,ws))
+		won_player_count += 1
 		print(f"loser position is: {str(check_loser_position())}")
 	elif payload["message"] == "battle_won":
-		waiting_players.append((payload["payload"]["player"],payload["payload"]["ws"]))
+		waiting_players.append((player,ws))
 		lost_player_count += 1
 		print("the winner position is at:",str(check_winner_position()))
 		pair_event.set()
 
+def check_round_type():
+	global total_players_at_start,lost_players
+	round_num = total_players_at_start - len(lost_players)
+	if  round_num == 2:
+		print("Finals starting")
+	elif round_num <= 4:
+		print("Semi finals starting")
+	elif round_num <= 8:
+		print("quarter finals starting")
+	
+
 def check_loser_position():
 	global total_players_at_start
-	global lost_player_count
-	loser_position:int = total_players_at_start - lost_player_count
+	global won_player_count
+	loser_position:int = (total_players_at_start - won_player_count) + 1
 	return loser_position
 	
 def check_winner_position():
@@ -109,6 +125,9 @@ async def admin_cli():
 	while not shutdown_event.is_set():
 		cmd = await loop.run_in_executor(None,input,"> ")
 
+		if shutdown_event.is_set():
+			break
+
 		if cmd == "players":
 			print(f"waiting players: {len(waiting_players)}")
 
@@ -141,6 +160,7 @@ async def admin_cli():
 			print("command unknown")
 
 async def start_battle(p1, q1, p2, q2):
+	check_round_type()
 	p1.battle_start_callback()
 	p2.battle_start_callback()
 	await p1.battle_against(p2, n_battles=1)
