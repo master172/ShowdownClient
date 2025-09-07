@@ -114,7 +114,8 @@ Jolly Nature
 - Rock Blast
 - Tail Slap
 """
-quick_team = """
+
+quick_team_1 = """
 Pikachu @ Light Ball  
 Ability: Static  
 Tera Type: Electric  
@@ -125,3 +126,29 @@ Jolly Nature
 - Thunder Bolt
 - Iron Tail  
 """
+
+quick_team_2 = """
+Charizard @ Heavy-Duty Boots  
+Ability: Solar Power  
+Tera Type: Fire  
+EVs: 252 SpA / 4 SpD / 252 Spe  
+Timid Nature  
+- Fire Blast  
+- Solar Beam  
+- Focus Blast  
+- Flame Thrower
+"""
+
+quick_team_3 = """
+Garchomp @ Leftovers  
+Ability: Rough Skin  
+Tera Type: Dragon  
+EVs: 252 Atk / 4 SpD / 252 Spe  
+Jolly Nature  
+- Earthquake  
+- Dragon Claw  
+- Swords Dance  
+- Stealth Rock
+"""
+
+quick_teams = [quick_team_1,quick_team_2,quick_team_3]

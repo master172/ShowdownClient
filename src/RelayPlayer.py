@@ -63,6 +63,12 @@ class RelayPlayer(Player):
 			return self.choose_random_move(battle)
 
 
+	def battle_start_callback(self):
+		asyncio.create_task(self.web_socket.send(json.dumps(
+			{
+				"type":"battle_pre_start"
+			}
+		)))
 
 	def _battle_finished_callback(self, battle):
 		asyncio.create_task(self.web_socket.send(json.dumps({

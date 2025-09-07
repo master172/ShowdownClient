@@ -26,7 +26,7 @@ async def handler(ws):
 		web_socket = ws,
 		input_queue=queue,
 		battle_format=format,
-		team=teams.quick_team,
+		team=teams.quick_teams[joined_player-1],
 		message_handler=handle_relay_message)
 
 	waiting_players.append((client_player,queue))
@@ -97,7 +97,9 @@ async def admin_cli():
 			print("command unknown")
 
 async def start_battle(p1, q1, p2, q2):
-    await p1.battle_against(p2, n_battles=1)
+	p1.battle_start_callback()
+	p2.battle_start_callback()
+	await p1.battle_against(p2, n_battles=1)
 
 async def main():
 	server = await websockets.serve(handler, "localhost", 8765)
